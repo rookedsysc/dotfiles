@@ -162,6 +162,11 @@ esac
 source $HOME/.local/bin/env
 ## Java - v 뒤에 숫자 입력해서 version 변경
 export JAVA_HOME=$(/usr/libexec/java_home -v21)
+## Flutter - FVM 
+## ref : https://fvm.app/documentation/guides/quick-reference
+export PATH="$HOME/.fvm_flutter/bin:$PATH"
+
+
 
 
 # pnpm
