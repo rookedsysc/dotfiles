@@ -165,7 +165,7 @@ export JAVA_HOME=$(/usr/libexec/java_home -v21)
 ## Flutter - FVM 
 ## ref : https://fvm.app/documentation/guides/quick-reference
 export PATH="$HOME/.fvm_flutter/bin:$PATH"
-
+alias studio="open -a '/Applications/Android Studio.app'"
 
 
 
@@ -181,3 +181,9 @@ esac
 
 # Added by Antigravity
 export PATH="/Users/rookedsysc/.antigravity/antigravity/bin:$PATH"
+
+## [Completion]
+## Completion scripts setup. Remove the following line to uninstall
+[[ -f /Users/rookedsysc/.dart-cli-completion/zsh-config.zsh ]] && . /Users/rookedsysc/.dart-cli-completion/zsh-config.zsh || true
+## [/Completion]
+
