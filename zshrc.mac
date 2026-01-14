@@ -141,7 +141,7 @@ alias cpai='f() { TARGET_DIR="${1:-.}"; cp -r .github .claude .agent .gemini CLA
 alias z=zellij
 alias za="zellij attach --create"
 alias zd="zellij delete-session --force"
-alias znw='f() { CURRENT_DIR=$(basename "$PWD"); ZNAME="$1"; DIRNAME="${CURRENT_DIR}-${ZNAME//\//-}"; SESSION_NAME="${CURRENT_DIR}-${ZNAME//\//-}"; git worktree add -b $ZNAME ../$DIRNAME && cpai ../$DIRNAME && cd ../$DIRNAME && za $SESSION_NAME; }; f'
+alias zwn='f() { CURRENT_DIR=$(basename "$(dirname "$PWD")"); ZNAME="$1"; DIRNAME="${CURRENT_DIR}-${ZNAME//\//-}"; SESSION_NAME="${CURRENT_DIR}-${ZNAME//\//-}"; git worktree add -b $ZNAME ../$DIRNAME && cpai ../$DIRNAME && cd ../$DIRNAME && za $SESSION_NAME; }; f'
 # 새로운 워크트리 생성
 alias gwn='f() { CURRENT_DIR=$(basename "$(dirname "$PWD")"); ZNAME="$1"; DIRNAME="${CURRENT_DIR}-${ZNAME//\//-}"; SESSION_NAME="${CURRENT_DIR}-${ZNAME//\//-}"; git worktree add -b $ZNAME ../$DIRNAME && cd ../$DIRNAME; }; f'
 # 원격 브랜치로부터 워크트리 생성
@@ -167,10 +167,7 @@ source $HOME/.local/bin/env
 export JAVA_HOME=$(/usr/libexec/java_home -v21)
 ## Flutter - FVM 
 ## ref : https://fvm.app/documentation/guides/quick-reference
-export PATH="$HOME/.fvm_flutter/bin:$PATH"
-alias studio="open -a '/Applications/Android Studio.app'"
-
-
+export PATH="$HOME/fvm/bin:$PATH"
 
 # pnpm
 export PNPM_HOME="/Users/rookedsysc/Library/pnpm"
