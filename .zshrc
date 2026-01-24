@@ -111,6 +111,7 @@ source $ZSH/oh-my-zsh.sh
 # path
 export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
 export NVM_DIR="$HOME/.nvm"
+export PATH="$HOME/.local/bin:$PATH"
 
 # alias
 alias v=nvim
