@@ -22,6 +22,11 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 brew install git wget curl zsh
 
+# 언어팩 설치
+sudo apt install locales
+sudo locale-gen en_US.UTF-8
+sudo update-locale LANG=en_US.UTF-8
+
 # Cargo / Rust Install
 curl https://sh.rustup.rs -sSf | sh
 
