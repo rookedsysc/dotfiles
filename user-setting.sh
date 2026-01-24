@@ -11,6 +11,7 @@ sudo apt-get install -y openssh-server
 sudo systemctl enable ssh
 sudo systemctl start ssh
 sudo apt-get -y install python pip
+sudo apt install xauth xclip
 
 pip install --upgrade pip
 
