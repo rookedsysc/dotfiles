@@ -28,6 +28,10 @@ In root
         wget https://raw.githubusercontent.com/rookedsysc/linux-macos-setting/master/root-setting.sh
     sh root-setting.sh
 
+## TMUX 사용법
+
+[열기](./docs/TMUX.md)
+
 ## Claude Code & SuperClaude 설치
 
 ### 사전 요구사항
