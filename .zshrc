@@ -119,6 +119,39 @@ alias vi=nvim
 alias vim=nvim
 alias lg=lazygit
 alias ld=lazydocker
+# tmux & workmux
+alias wm=workmux
+unalias tm 2>/dev/null
+tm() {
+  case "$1" in
+    remove|rm)
+      tmux kill-session -t "$2"
+      ;;
+    new-session|ns)
+      # 세션이 존재하는지 확인
+      if tmux has-session -t "$2" 2>/dev/null; then
+        # 이미 존재하면 attach
+        tmux attach -t "$2"
+      else
+        # 없으면 새로 생성
+        tmux new -s "$2"
+      fi
+      ;;
+    *)
+      # 인자가 하나만 있고 tmux 세션 이름으로 사용 가능한 경우, 세션에 attach 또는 생성
+      if [ $# -eq 1 ] && [ -n "$1" ]; then
+        if tmux has-session -t "$1" 2>/dev/null; then
+          tmux attach -t "$1"
+        else
+          tmux new -s "$1"
+        fi
+      else
+        # 그 외의 경우 tmux 명령어로 전달
+        tmux "$@"
+      fi
+      ;;
+  esac
+}
 # 새로운 워크트리 생성
 alias gwn='f() { CURRENT_DIR=$(basename "$(dirname "$PWD")"); ZNAME="$1"; DIRNAME="${CURRENT_DIR}-${ZNAME//\//-}"; SESSION_NAME="${CURRENT_DIR}-${ZNAME//\//-}"; git worktree add -b $ZNAME ../$DIRNAME && cd ../$DIRNAME; }; f'
 # 원격 브랜치로부터 워크트리 생성
