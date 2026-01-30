@@ -119,11 +119,6 @@ alias vi=nvim
 alias vim=nvim
 alias lg=lazygit
 alias ld=lazydocker
-alias cpai='f() { TARGET_DIR="${1:-.}"; cp -r .github .claude .agent .gemini CLAUDE.md CLAUDE.local.md AGENTS.md GEMINI.md "$TARGET_DIR/" 2>/dev/null && echo "AI config files copied to $TARGET_DIR" || echo "Some files may not exist"; }; f'
-alias z=zellij
-alias za="zellij attach --create"
-alias zd="zellij delete-session --force"
-alias zwn='f() { CURRENT_DIR=$(basename "$(dirname "$PWD")"); ZNAME="$1"; DIRNAME="${CURRENT_DIR}-${ZNAME//\//-}"; SESSION_NAME="${CURRENT_DIR}-${ZNAME//\//-}"; git worktree add -b $ZNAME ../$DIRNAME && cpai ../$DIRNAME && cd ../$DIRNAME && za $SESSION_NAME; }; f'
 # 새로운 워크트리 생성
 alias gwn='f() { CURRENT_DIR=$(basename "$(dirname "$PWD")"); ZNAME="$1"; DIRNAME="${CURRENT_DIR}-${ZNAME//\//-}"; SESSION_NAME="${CURRENT_DIR}-${ZNAME//\//-}"; git worktree add -b $ZNAME ../$DIRNAME && cd ../$DIRNAME; }; f'
 # 원격 브랜치로부터 워크트리 생성

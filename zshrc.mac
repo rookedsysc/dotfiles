@@ -170,10 +170,6 @@ tm() {
       ;;
   esac
 }
-alias z=zellij
-alias za="zellij attach --create"
-alias zd="zellij delete-session --force"
-alias zwn='f() { CURRENT_DIR=$(basename "$(dirname "$PWD")"); ZNAME="$1"; DIRNAME="${CURRENT_DIR}-${ZNAME//\//-}"; SESSION_NAME="${CURRENT_DIR}-${ZNAME//\//-}"; git worktree add -b $ZNAME ../$DIRNAME && cpai ../$DIRNAME && cd ../$DIRNAME && za $SESSION_NAME; }; f'
 # 새로운 워크트리 생성
 alias gwn='f() { CURRENT_DIR=$(basename "$(dirname "$PWD")"); ZNAME="$1"; DIRNAME="${CURRENT_DIR}-${ZNAME//\//-}"; SESSION_NAME="${CURRENT_DIR}-${ZNAME//\//-}"; git worktree add -b $ZNAME ../$DIRNAME && cd ../$DIRNAME; }; f'
 # 원격 브랜치로부터 워크트리 생성
