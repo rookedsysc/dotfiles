@@ -1,8 +1,5 @@
 nerdfont: true
 
-panes:
-  - command: zsh
-
 files:
   copy:
     - .env
