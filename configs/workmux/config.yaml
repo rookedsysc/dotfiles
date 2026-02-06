@@ -1,6 +1,7 @@
 nerdfont: true
 
 panes:
+  - command:
   - split: horizontal
 
 files:
