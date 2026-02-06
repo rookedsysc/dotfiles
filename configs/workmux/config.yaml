@@ -1,5 +1,8 @@
 nerdfont: true
 
+panes:
+  - split: horizontal
+
 files:
   copy:
     - .env
