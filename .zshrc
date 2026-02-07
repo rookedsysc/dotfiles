@@ -204,21 +204,11 @@ bindkey -e
 bindkey "[D" backward-word
 bindkey "[C" forward-word
 
-# 파이썬 설정
-source $HOME/.local/bin/env
-alias python=python3
-alias pip=pip3
-
 # Rust Cargo 환경 설정
 source "$HOME/.cargo/env"
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
-# ENV
-export ENVIRONMENT="production" # labs
-
-
-. "$HOME/.local/bin/env"
-
+# nvm
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
