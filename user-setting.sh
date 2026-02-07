@@ -21,7 +21,7 @@ echo >>~/.bashrc
 echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >>~/.bashrc
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
-brew install git wget curl zsh
+brew install git wget curl zsh rg
 brew install tmux raine/workmux/workmux
 
 # 언어팩 설치
