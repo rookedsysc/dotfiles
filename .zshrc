@@ -121,7 +121,6 @@ alias lg=lazygit
 alias ld=lazydocker
 # tmux & workmux
 alias wm=workmux
-unalias tm 2>/dev/null
 tm() {
   case "$1" in
     remove|rm)
@@ -160,6 +159,14 @@ tm() {
       fi
       ;;
   esac
+}
+ts() {
+  local selected=$(tmux ls | cut -d: -f1 | fzf --height 40% --reverse)
+  [ -n "$selected" ] && tm "$selected"
+}
+ws() {
+  local selected=$(wm ls | awk 'NR>1 {print $1}' | fzf-tmux -p 55%,60% --reverse)
+  [ -n "$selected" ] && wm open "$selected"
 }
 # 새로운 워크트리 생성
 alias gwn='f() { CURRENT_DIR=$(basename "$(dirname "$PWD")"); ZNAME="$1"; DIRNAME="${CURRENT_DIR}-${ZNAME//\//-}"; SESSION_NAME="${CURRENT_DIR}-${ZNAME//\//-}"; git worktree add -b $ZNAME ../$DIRNAME && cd ../$DIRNAME; }; f'
