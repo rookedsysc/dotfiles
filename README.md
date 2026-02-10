@@ -32,6 +32,14 @@ In root
 
 [열기](./docs/TMUX.md)
 
+### TPM (Tmux Plugin Manager) 설치
+
+tmux 플러그인 관리를 위해 TPM을 설치해야 합니다.
+
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+설치 후 tmux에서 `prefix + I`를 눌러 플러그인을 설치합니다.
+
 ## Claude Code & SuperClaude 설치
 
 ### 사전 요구사항

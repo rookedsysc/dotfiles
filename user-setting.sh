@@ -24,6 +24,9 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 brew install git wget curl zsh rg
 brew install tmux raine/workmux/workmux
 
+# TPM (Tmux Plugin Manager) Install
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
 # 언어팩 설치
 sudo apt install locales
 sudo locale-gen en_US.UTF-8
