@@ -220,6 +220,16 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+# .nvmrc 기반 자동 Node 버전 전환
+autoload -U add-zsh-hook
+load-nvmrc() {
+  if [[ -f .nvmrc ]]; then
+    nvm use
+  fi
+}
+add-zsh-hook chpwd load-nvmrc
+load-nvmrc
+
 # pnpm
 export PNPM_HOME="/home/dev/.local/share/pnpm"
 case ":$PATH:" in
