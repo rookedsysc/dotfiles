@@ -202,8 +202,29 @@ export NVM_DIR="$HOME/.nvm"
 # .nvmrc 기반 자동 Node 버전 전환
 autoload -U add-zsh-hook
 load-nvmrc() {
-  if [[ -f .nvmrc ]]; then
-    nvm use
+  local nvmrc_path node_version target_version current_version
+
+  command -v nvm >/dev/null 2>&1 || return
+
+  nvmrc_path="$(nvm_find_nvmrc)"
+  if [[ -z "$nvmrc_path" ]]; then
+    return
+  fi
+
+  node_version="$(<"$nvmrc_path")"
+  node_version="${node_version#"${node_version%%[![:space:]]*}"}"
+  node_version="${node_version%"${node_version##*[![:space:]]}"}"
+  if [[ -z "$node_version" ]]; then
+    return
+  fi
+
+  target_version="$(nvm version "$node_version")"
+  current_version="$(nvm current)"
+
+  if [[ "$target_version" == "N/A" ]]; then
+    nvm install "$node_version"
+  elif [[ "$current_version" != "$target_version" ]]; then
+    nvm use "$target_version"
   fi
 }
 add-zsh-hook chpwd load-nvmrc
@@ -241,3 +262,8 @@ export PATH="/Users/rookedsysc/.antigravity/antigravity/bin:$PATH"
 [[ -f /Users/rookedsysc/.dart-cli-completion/zsh-config.zsh ]] && . /Users/rookedsysc/.dart-cli-completion/zsh-config.zsh || true
 ## [/Completion]
 
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /opt/homebrew/bin/terraform terraform
+
+# opencode
+export PATH=/Users/rookedsysc/.opencode/bin:$PATH
