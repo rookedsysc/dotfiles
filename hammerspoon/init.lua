@@ -71,3 +71,116 @@ end)
 hs.hotkey.bind({"ctrl", "cmd", "shift"}, "left", function()
     switchSpaceAllDisplays("left")
 end)
+
+-- Alert 스타일 알림 임시 숨김 / 복원
+-- Close AXAction은 NC 리스트에서도 영구 삭제되므로,
+-- alert 윈도우의 AXPosition을 화면 밖으로 이동시키는 방식으로 "옆으로 슬쩍 치우기" 구현.
+-- ] : 화면에 보이는 모든 NC 윈도우를 (-9999, -9999)로 이동, 원래 좌표를 Lua state에 stash
+-- [ : stash된 좌표로 복원. stash 없으면 우상단 기본 위치로 복원.
+-- ⚠️ 시스템 설정 → 개인정보 보호 및 보안 → 손쉬운 사용 에서 Hammerspoon 허용 필요.
+
+local hiddenStash = nil  -- JSON 문자열: stash된 윈도우 좌표 배열
+
+local hideAlertsJXA = [==[
+function run() {
+  const se = Application('System Events');
+  let nc;
+  try { nc = se.processes.byName('NotificationCenter'); } catch(e) { return '[]'; }
+  if (nc.windows.length === 0) return '[]';
+  let positions = [];
+  for (let w of nc.windows()) {
+    try {
+      let p = w.position();
+      if (p && p[0] > -5000) {
+        positions.push([p[0], p[1]]);
+        w.position = [-9999, -9999];
+      }
+    } catch (_) {}
+  }
+  return JSON.stringify(positions);
+}
+]==]
+
+local function hideAlerts()
+    local ok, result, err = hs.osascript.javascript(hideAlertsJXA)
+    if not ok then
+        hs.alert.show("Hide 실패: " .. tostring(err))
+        print("Hide err:", err)
+        return
+    end
+    if result == "[]" then
+        print("Hide: 화면에 보이는 알림 없음")
+        return
+    end
+    hiddenStash = result
+    print("Hide stashed:", result)
+end
+
+local function showAlerts()
+    local script
+    if hiddenStash then
+        script = string.format([[
+function run() {
+  const POS = %s;
+  const se = Application('System Events');
+  let nc;
+  try { nc = se.processes.byName('NotificationCenter'); } catch(e) { return 'no NC'; }
+  let restored = 0;
+  let idx = 0;
+  for (let w of nc.windows()) {
+    try {
+      let p = w.position();
+      if (p && p[0] < -5000 && idx < POS.length) {
+        w.position = POS[idx];
+        idx++;
+        restored++;
+      }
+    } catch (_) {}
+  }
+  return 'restored: ' + restored;
+}
+        ]], hiddenStash)
+    else
+        -- 폴백: stash 없으면 우상단 기본 위치로
+        local screen = hs.screen.primaryScreen()
+        local frame = screen:fullFrame()
+        local baseX = frame.x + frame.w - 380
+        local baseY = frame.y + 30
+        script = string.format([[
+function run() {
+  const se = Application('System Events');
+  let nc;
+  try { nc = se.processes.byName('NotificationCenter'); } catch(e) { return 'no NC'; }
+  if (nc.windows.length === 0) return 'no windows';
+  let restored = 0;
+  let bx = %d, by = %d;
+  for (let w of nc.windows()) {
+    try {
+      let p = w.position();
+      if (p && p[0] < -5000) {
+        w.position = [bx, by];
+        by += 100;
+        restored++;
+      }
+    } catch (_) {}
+  }
+  return 'restored(default): ' + restored;
+}
+        ]], baseX, baseY)
+    end
+
+    local ok, result, err = hs.osascript.javascript(script)
+    if not ok then
+        hs.alert.show("Show 실패: " .. tostring(err))
+        print("Show err:", err)
+        return
+    end
+    print("Show:", result)
+    hiddenStash = nil
+end
+
+-- 알림 옆으로 슬쩍 치우기
+hs.hotkey.bind({"ctrl", "cmd", "shift"}, "]", hideAlerts)
+
+-- 치워뒀던 알림 다시 보이기
+hs.hotkey.bind({"ctrl", "cmd", "shift"}, "[", showAlerts)
